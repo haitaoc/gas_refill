@@ -29,7 +29,7 @@ router.post('/', async (req: Request, res: Response) => {
     logger.info("Handle POST Refuel request");
     try {
         const jsonData = req.body;
-        let refuel = new Refuel(null, jsonData.date, jsonData.gasPrice, jsonData.amountPaid, jsonData.curMileage);
+        let refuel = new Refuel(null, jsonData.vehicleNickname, jsonData.date, jsonData.gasPrice, jsonData.amountPaid, jsonData.curMileage);
         
         const ret = await refuelDao.add(refuel);
 

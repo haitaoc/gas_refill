@@ -34,12 +34,17 @@ class RefuelDao {
 
     public async add(refuel: IRefuel): Promise<IRefuel | null> {
         logger.info("Adding [Refuel] item");
+        
+        refuel.date = new Date(refuel.date).toISOString();
 
         const params: PutItemInput = {
             TableName: tableName,
             Item: {
                 'id': {
                     S: refuel.id,
+                },
+                'vehicleNickname': {
+                    S: refuel.vehicleNickname,
                 },
                 'date': {
                     S: refuel.date,
@@ -90,17 +95,19 @@ class RefuelDao {
 
     private mapItemToRefuel(item: DynamoDB.AttributeMap): IRefuel | null {
         const id = item.id.S;
+        const vehicleNickname = item.vehicleNickname.S;
         const date = item.date.S;
         const gasPrice = Number(item.gasPrice.N);
         const amountPaid = Number(item.amountPaid.N);
         const curMileage = Number(item.curMileage.N);
 
-        if (id === undefined || date == undefined || gasPrice === undefined || amountPaid === undefined || curMileage === undefined) {
+        if (id === undefined || vehicleNickname == undefined || date == undefined || gasPrice === undefined || amountPaid === undefined || curMileage === undefined) {
             return null;
         }
 
         return {
             id: id,
+            vehicleNickname: vehicleNickname,
             date: date,
             gasPrice: gasPrice,
             amountPaid: amountPaid,

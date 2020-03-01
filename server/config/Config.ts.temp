@@ -9,6 +9,9 @@ const config = {
             accessKey: '',
             region: 'us-west-2',
         }
+    },
+    corsOptions: {
+        origin: "http://localhost:3000"
     }
 };
 

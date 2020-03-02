@@ -65,7 +65,7 @@ const RefuelToolbar = () => {
     const [alertMsg, setAlertMsg] = useState<String>('');
 
     const openRefuelCreator = () => {
-        setDefaultDate(Datetime.now().toISOString().slice(0, 19));
+        setDefaultDate(Datetime.nowLocal().toISOString().slice(0, 19));
         setExpanded(true);
     }
 
@@ -98,28 +98,28 @@ const RefuelToolbar = () => {
 
     return (
         <React.Fragment>
-            <AppBar position='fixed'>
-                    <Toolbar>
-                        <Typography variant='subtitle1' className={classes.title}>
-                            Refuel History
-                        </Typography>
-                        <IconButton>
-                            <AddIcon
-                                onClick={handleAddClick}
-                            />
-                        </IconButton>
-                        <IconButton>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Toolbar>
-                
-                    <Collapse in={expanded} className={classes.expansionPanel}>
-                        <RefuelCreator
-                            defaultDate={defaultDate}
-                            onComplete={handleRefuelCreationComplete}
-                            onCancel={closeRefuelCreator}
+            <AppBar position='sticky'>
+                <Toolbar>
+                    <Typography variant='subtitle1' className={classes.title}>
+                        Refuel History
+                    </Typography>
+                    <IconButton>
+                        <AddIcon
+                            onClick={handleAddClick}
                         />
-                    </Collapse>
+                    </IconButton>
+                    <IconButton>
+                        <DeleteIcon />
+                    </IconButton>
+                </Toolbar>
+            
+                <Collapse in={expanded} className={classes.expansionPanel}>
+                    <RefuelCreator
+                        defaultDate={defaultDate}
+                        onComplete={handleRefuelCreationComplete}
+                        onCancel={closeRefuelCreator}
+                    />
+                </Collapse>
             </AppBar>
             <Snackbar
                 open={alertOpen}

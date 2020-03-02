@@ -1,5 +1,6 @@
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import Refuel from 'models/Refuel';
+import RefuelContainer from 'containers/RefuelContainer';
 
 const requestAdd: CaseReducer<RefuelState, PayloadAction<Refuel>> = (state, action) => {
     const newState = {
@@ -21,7 +22,7 @@ const recieveAdd: CaseReducer<RefuelState, PayloadAction<Refuel | null>> = (stat
     return newState;
 }
 
-const requestGetAll: CaseReducer<RefuelState, PayloadAction<{}>> = (state, action) => {
+const requestGetAll: CaseReducer<RefuelState, PayloadAction> = (state, action) => {
     const newState = {
         ...state,
         fetchStatus: RequestStatus.InProgress
@@ -29,7 +30,7 @@ const requestGetAll: CaseReducer<RefuelState, PayloadAction<{}>> = (state, actio
     return newState;
 }
 
-const recieveGetAll: CaseReducer<RefuelState, PayloadAction<Refuel[] | null>> = (state, action) => {
+const recieveGetAll: CaseReducer<RefuelState, PayloadAction<(Refuel | null)[] | null>> = (state, action) => {
     if (action.payload === null) {
         return {
             ...state,
@@ -54,7 +55,7 @@ export enum RequestStatus {
 export interface RefuelState {
     refuelToAdd: Refuel | null;
     addStatus: RequestStatus;
-    refuels: Refuel[];
+    refuels: (Refuel | null)[];
     fetchStatus: RequestStatus;
 }
 

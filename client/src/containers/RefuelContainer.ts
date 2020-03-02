@@ -45,7 +45,7 @@ class RefuelContainer {
         return new Refuel(
             item.id,
             item.vehicleNickname,
-            DateTime.format(item.date),
+            DateTime.toLocalString(item.date),
             item.gasPrice,
             item.amountPaid,
             item.curMileage

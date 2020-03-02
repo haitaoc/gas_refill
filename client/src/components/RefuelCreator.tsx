@@ -32,7 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const {
     requestAdd,
-    recieveAdd
+    recieveAdd,
+    requestGetAll,
+    recieveGetAll
 } = actions;
 
 interface InputFeedback {
@@ -43,7 +45,9 @@ interface InputFeedback {
 const mapState = refuelStateSelector;
 const mapDispatch = {
     requestAdd,
-    recieveAdd
+    recieveAdd,
+    requestGetAll,
+    recieveGetAll
 };
 
 const connector = connect(
@@ -103,6 +107,17 @@ const RefuelCreator = (props: Props) => {
             (res) => {
                 props.recieveAdd(res);
                 props.onComplete(true);
+
+                props.requestGetAll();
+                RefuelContainer.getAll()
+                .then(
+                    (res) => {
+                        props.recieveGetAll(res);
+                    },
+                    (error) => {
+                        props.recieveGetAll(null);
+                    }
+                );
             },
             (error) => {
                 props.recieveAdd(null);
@@ -215,7 +230,7 @@ const RefuelCreator = (props: Props) => {
                         Add
                     </Button>
                     {(props.addStatus === RequestStatus.InProgress)
-                        && <CircularProgress size={24} className={classes.buttonProgress} />}
+                    && <CircularProgress size={24} className={classes.buttonProgress} />}
                 </Grid>
             </Grid>
         </React.Fragment>

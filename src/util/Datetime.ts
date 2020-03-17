@@ -9,6 +9,12 @@ class DateTime {
         console.log(new Date(utcDatetime).toLocaleString());
         return new Date(utcDatetime).toLocaleString();
     }
+
+    public static toUTCString(localDatetime: string): string {
+        // Needs to convert to "yyyy/mm/dd HH:MM:SS" for Safari support
+        localDatetime = localDatetime.replace(/-/g, '/').replace('T', ' ');
+        return new Date(Date.parse(localDatetime)).toISOString();
+    }
 }
 
 export default DateTime;
